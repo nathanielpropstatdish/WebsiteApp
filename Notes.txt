@@ -1,0 +1,15 @@
+Building the app in the front end to bypass some SSL issues we get when trying to make API calls with a backend (nodejs) service.  Refer to Fetch Test and Hello World for initial investigations there.
+
+In order to get our API request through the frontend (browser) we have to get a response with CORS policy in the header.
+We need this policy response to contain CORS allowed anywhere tags.
+
+We currently make use of a node server https://github.com/Rob--W/cors-anywhere cloned from here.  The Syntax for this is: 'http://localhost:8080/'+'API Address with slash in front'
+We had to install a dependency for this server using: npm install http-proxy
+This uses some deprecated packages and is likely not a good end solution, though this entire process is an end-around for CORS and ultimately zScaler issues.
+Note that it was hosted on localhost when the node server starts
+It allows us to use a simple localhost proxy server to bounce this request through.  
+
+The Proxy server does not care that it does not get a CORS header response.
+It takes the API response, adds the appropriate header, and then returns to the browser the results.
+One last modification we had to make was to set an environment variable to bypass SSL before starting the nodejs server: $Env:NODE_TLS_REJECT_UNAUTHORIZED = "0"
+This will have to be addressed by the final version.  This is currently required because zscaler interferes with proper ssl return for some reason, likely modifying it in flight.

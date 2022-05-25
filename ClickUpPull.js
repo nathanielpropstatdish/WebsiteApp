@@ -8,7 +8,9 @@ function pullClickup() {
     var request = new XMLHttpRequest();
     var testData = {};
 
-    request.open('GET', 'https://api.clickup.com/api/v2/user');
+    //In order to get a CORS passable answer for the browser window we have to use https://cors-anywhere.herokuapp.com/corsdemo in the browser, this allows us to make
+    //use of the service temporarily.  Syntax is then 'https://cors-anywhere.herokuapp.com/'+'API Address here'
+    request.open('GET', 'http://localhost:8080'+'/https://api.clickup.com/api/v2/user');
     
     request.setRequestHeader('Authorization', 'pk_48215650_NS1ZMBOG45FWMAKNKAWCEU7TQ7PE3DOD');
     console.log(request.getResponseHeader)
