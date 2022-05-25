@@ -12,7 +12,7 @@ function pullClickup() {
     //use of the service temporarily.  Syntax is then 'https://cors-anywhere.herokuapp.com/'+'API Address here'
     request.open('GET', 'http://localhost:8080'+'/https://api.clickup.com/api/v2/user');
     
-    request.setRequestHeader('Authorization', 'pk_48215650_NS1ZMBOG45FWMAKNKAWCEU7TQ7PE3DOD');
+    request.setRequestHeader('Authorization', clickupAuthKey);
     console.log(request.getResponseHeader)
     
     request.onreadystatechange = function () {
