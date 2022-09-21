@@ -13,3 +13,24 @@ The Proxy server does not care that it does not get a CORS header response.
 It takes the API response, adds the appropriate header, and then returns to the browser the results.
 One last modification we had to make was to set an environment variable to bypass SSL before starting the nodejs server: $Env:NODE_TLS_REJECT_UNAUTHORIZED = "0"
 This will have to be addressed by the final version.  This is currently required because zscaler interferes with proper ssl return for some reason, likely modifying it in flight.
+In order to start this service (required before using the clickup pull) we navigate to the cors-anywhere folder here and use "node server.js"
+Can pull the ClickUp API key from https://app.clickup.com/18019908/settings/apps after logging in.
+Have stored what is likely the corp security cert next to the overall testing folder.  It is set as a system variable, and also imported to all users on the vm.  
+
+Notes on Making Cors-Anywhere work
+In the node server terminal we used $Env:PORT = "443" in order to set the proxy to ssl mode
+Looks like we need to modify the cors-anywhere server.js to include some options for HTTPS certs.  May have to extract some keys or something from the cert file.  Reference https://github.com/Rob--W/cors-anywhere/issues/74
+
+Look, this is getting out of hand.  Lets step back and revisit the core issue here.  CORS is blocked in many ways for requests initiated from a file:// origin.
+Instead lets try to start up an HTTP server with node and use that to host our web page.
+https://www.digitalocean.com/community/tutorials/how-to-create-a-web-server-in-node-js-with-the-http-module
+Nice tutorial
+Now I will try to create a server that reaches out to ClickUp's API to test it out
+We will have to save the auth key as an environmental variable for now
+We're getting stopped up on a code error.  Need to look at this a bit deeper, doesn't like my request.open statement I think
+As a test I set up the CommunicationServer to call out to a NASA site with an API Key.
+Using the node-fetch following https://www.twilio.com/blog/5-ways-to-make-http-requests-in-node-js-using-async-await
+Despite this website working via the browser I was unable to get it working on the webserver.
+So it looks like we're still having the same issue with zScaler messing with the cert.
+Its triggering an "UNABLE_TO_GET_ISSUER_CERT_LOCALLY" error.  I will need to deal with this in some fashion.
+Probably the best way is to contact IT since this appears to be an environmental issue.
