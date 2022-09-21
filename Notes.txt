@@ -1,3 +1,10 @@
+Git Notes:
+git remote add WebsiteApp https://github.com/nathanielpropstatdish/WebsiteApp
+git add .
+Use that in the folder for WebsiteApp
+git commit -m "Commit Message Here"
+git push WebsiteApp
+
 Building the app in the front end to bypass some SSL issues we get when trying to make API calls with a backend (nodejs) service.  Refer to Fetch Test and Hello World for initial investigations there.
 
 In order to get our API request through the frontend (browser) we have to get a response with CORS policy in the header.
